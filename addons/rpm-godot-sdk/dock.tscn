@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://4xm538djkeuw"]
+
+[ext_resource type="Script" path="res://addons/rpm-godot-sdk/avatar_loader.gd" id="1_yfrbv"]
+[ext_resource type="Texture2D" uid="uid://b6c2rt67nnfle" path="res://addons/rpm-godot-sdk/banner.png" id="2_nd2xs"]
+
+[node name="Dock" type="Control"]
+layout_mode = 3
+anchor_right = 0.347
+anchor_bottom = 0.278
+offset_right = 0.255981
+offset_bottom = -0.144012
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yfrbv")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_direction = 2
+layout_mode = 1
+offset_right = 400.0
+offset_bottom = 180.0
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(400, 110)
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 0
+texture = ExtResource("2_nd2xs")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Enter your avatar's URL here"
+alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Load Avatar"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_pressed"]
