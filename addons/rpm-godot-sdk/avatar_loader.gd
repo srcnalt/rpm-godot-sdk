@@ -4,6 +4,7 @@ extends Node
 var line_edit: LineEdit
 var http_request: HTTPRequest
 var avatar: Node3D
+var guid: String
 var anim_node: AnimationPlayer
 
 func _ready():
@@ -12,45 +13,55 @@ func _ready():
 	http_request.connect("request_completed", _request_completed)
 	var scene = preload("res://addons/rpm-godot-sdk/walking.glb").instantiate()
 	anim_node = scene.get_node("AnimationPlayer").duplicate()
-	print("loaded")
 
 func _on_pressed():
-	print("button pressed")
-	
 	if avatar != null:
 		avatar.free()
-		
+	
+	var url = line_edit.text
+	guid = url.split("/")[-1].split("?")[0].replace(".glb", "")
+	
 	if http_request.request(line_edit.text) != OK:
 		push_error("An error occurred in the HTTP request.")
 
 func _request_completed(result, response_code, headers, body):
 	if response_code == 200:
-		_save_glb_to_avatars_folder(body)
 		
-		var parent = get_tree().edited_scene_root
-		
+		var ext = GLTFDocumentExtensionConvertImporterMesh.new()
 		var doc = GLTFDocument.new()
+		doc.register_gltf_document_extension(ext)
 		var state = GLTFState.new()
-		if doc.append_from_buffer(body, "base_path?", state) == OK:
-			var avatar = doc.generate_scene(state)
-			parent.add_child(avatar)
-			avatar.set_owner(parent)
+		state.handle_binary_image = GLTFState.HANDLE_BINARY_EMBED_AS_UNCOMPRESSED
+		
+		if doc.append_from_buffer(body, "", state) == OK:
+			avatar = doc.generate_scene(state)
+			var parent = get_tree().edited_scene_root
+			var scene = ResourceLoader.load( "res://avatars/" + guid + ".tscn") as PackedScene
+			if scene:
+				var scene_instance = scene.instantiate()
+				scene_instance.set_name(guid)
+				parent.add_child(scene_instance)
+				scene_instance.set_owner(parent)
+				
+			else:
+				push_error("Failed to load scene.")
+			
+			_save_to_scene(avatar)
 		
 			print("loaded")
 		else:
 			print("error")
 
-func _save_glb_to_avatars_folder(body):
-	# Ensure the "avatars" directory exists
-	if not DirAccess.dir_exists_absolute("res://avatars"):
-		DirAccess.make_dir_absolute("res://avatars")
-
-	# Save the file
-	var file_name = "res://avatars/avatar.glb"
-	var file = FileAccess.open(file_name, FileAccess.WRITE)
+func _save_to_scene(avatar):
+	var packed_scene = PackedScene.new()
 	
-	if file.get_open_error() == OK:
-		file.store_buffer(body)
-		file.close()
+	if packed_scene.pack(avatar) == OK:
+		if not DirAccess.dir_exists_absolute("res://avatars"):
+			DirAccess.make_dir_absolute("res://avatars")
+		
+		if ResourceSaver.save(packed_scene, "res://avatars/" + guid + ".tscn") == OK:
+			print("Scene saved successfully!")
+		else:
+			push_error("Error while saving scene")
 	else:
-		push_error("Failed to save the GLB file.")
+		push_error("Error while packing scene")

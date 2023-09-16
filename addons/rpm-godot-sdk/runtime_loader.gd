@@ -23,7 +23,7 @@ func _on_pressed():
 		push_error("An error occurred in the HTTP request.")
 
 func _request_completed(result, response_code, headers, body):
-	if response_code == 200:		
+	if response_code == 200:
 		var doc = GLTFDocument.new()
 		var state = GLTFState.new()
 		if doc.append_from_buffer(body, "base_path?", state) == OK:
