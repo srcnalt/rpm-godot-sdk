@@ -28,14 +28,14 @@ func _request_completed(result, response_code, headers, body):
 		_save_glb_to_avatars_folder(body)
 		
 		var parent = get_tree().edited_scene_root
-		GLTFExtensions
+		
 		var doc = GLTFDocument.new()
 		var state = GLTFState.new()
-		if doc.append_from_buffer(body, "", state) == OK:
-			avatar = doc.generate_scene(state)
-			var instance = avatar.instantiate()
-			parent.add_child(instance)
-			instance.set_owner(parent)
+		if doc.append_from_buffer(body, "base_path?", state) == OK:
+			var avatar = doc.generate_scene(state)
+			parent.add_child(avatar)
+			avatar.set_owner(parent)
+		
 			print("loaded")
 		else:
 			print("error")
@@ -54,5 +54,3 @@ func _save_glb_to_avatars_folder(body):
 		file.close()
 	else:
 		push_error("Failed to save the GLB file.")
-		
-	
