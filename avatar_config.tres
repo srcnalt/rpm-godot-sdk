@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="AvatarConfig" load_steps=2 format=3 uid="uid://8y5n0y4i0v2g"]
+
+[ext_resource type="Script" path="res://avatar_config.gd" id="1_daeue"]
+
+[resource]
+script = ExtResource("1_daeue")
+lod = 1
+textureAtlas = 2

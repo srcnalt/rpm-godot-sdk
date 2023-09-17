@@ -1,12 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bquvfax3il31s"]
+[gd_scene load_steps=3 format=3 uid="uid://bquvfax3il31s"]
 
 [ext_resource type="Script" path="res://addons/rpm-godot-sdk/runtime_loader.gd" id="1_u7joc"]
 [ext_resource type="Script" path="res://scripts/rotate.gd" id="2_xcd6u"]
-[ext_resource type="PackedScene" uid="uid://cidj3it6xf6de" path="res://avatars/64bfcae90e72c63d7c398a43.tscn" id="3_5a8jh"]
-
-[sub_resource type="QuadMesh" id="QuadMesh_caopg"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nv10c"]
 
 [node name="Root" type="Node3D"]
 
@@ -30,21 +25,14 @@ text = "https://models.readyplayer.me/65059d4f7a4b5e00b4d9ea82.glb?textureAtlas=
 layout_mode = 2
 text = "Load Avatar"
 
-[node name="Camera3D" type="Camera3D" parent="Runtime"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3)
-fov = 40.0
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Runtime"]
-
-[node name="CSGMesh3D" type="CSGMesh3D" parent="Runtime"]
-transform = Transform3D(3, 0, 0, 0, -1.31134e-07, 3, 0, -3, -1.31134e-07, 0, 0, 0)
-mesh = SubResource("QuadMesh_caopg")
-material = SubResource("StandardMaterial3D_nv10c")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Runtime"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1)
 script = ExtResource("2_xcd6u")
 
-[node name="64bfcae90e72c63d7c398a43" type="Node3D" parent="." instance=ExtResource("3_5a8jh")]
+[node name="Camera3D" type="Camera3D" parent="Runtime"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3)
+fov = 40.0
 
 [connection signal="pressed" from="Runtime/VBoxContainer/Button" to="Runtime" method="_on_pressed"]

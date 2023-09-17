@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://4xm538djkeuw"]
+[gd_scene load_steps=4 format=3 uid="uid://4xm538djkeuw"]
 
 [ext_resource type="Script" path="res://addons/rpm-godot-sdk/avatar_loader.gd" id="1_yfrbv"]
 [ext_resource type="Texture2D" uid="uid://b6c2rt67nnfle" path="res://addons/rpm-godot-sdk/banner.png" id="2_nd2xs"]
+[ext_resource type="Script" path="res://scripts/number_slider.gd" id="3_idw2o"]
 
 [node name="Dock" type="Control"]
 layout_mode = 3
@@ -44,32 +45,60 @@ text = "Load Avatar"
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Panel" type="Panel" parent="VBoxContainer"]
-custom_minimum_size = Vector2(256, 48)
-layout_direction = 2
+[node name="LOD HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="VBoxContainer/Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.174
-anchor_bottom = 1.0
-offset_right = -0.274017
+[node name="Label" type="Label" parent="VBoxContainer/LOD HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Level of Detail"
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/LOD HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 3
+selected = 0
+popup/item_0/text = "High"
+popup/item_0/id = 0
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "Low"
+popup/item_2/id = 2
+
+[node name="Pose HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Pose HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Pose"
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/Pose HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 2
+selected = 0
+popup/item_0/text = "A Pose"
+popup/item_0/id = 0
+popup/item_1/text = "T Pose"
+popup/item_1/id = 1
+
+[node name="TextureAtlas HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TextureAtlas HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
 text = "Texture Atlasing"
 vertical_alignment = 1
 
-[node name="OptionButton" type="OptionButton" parent="VBoxContainer/Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.177
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 0.272995
-offset_top = 5.0
-offset_right = -8.0
-offset_bottom = -5.0
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/TextureAtlas HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 item_count = 4
+selected = 0
 popup/item_0/text = "None"
 popup/item_0/id = 0
 popup/item_1/text = "256"
@@ -79,4 +108,94 @@ popup/item_2/id = 2
 popup/item_3/text = "1024"
 popup/item_3/id = 3
 
+[node name="TextureSizeLimit HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TextureSizeLimit HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Texture Size Limit"
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TextureSizeLimit HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("3_idw2o")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/TextureSizeLimit HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = 256.0
+max_value = 1024.0
+value = 1024.0
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/TextureSizeLimit HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "1024"
+virtual_keyboard_type = 2
+
+[node name="TextureChannel HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TextureChannel HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Texture Channels"
+vertical_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="VBoxContainer/TextureChannel HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+select_mode = 1
+allow_reselect = true
+allow_rmb_select = true
+auto_height = true
+item_count = 5
+max_columns = 5
+same_column_width = true
+item_0/text = "Base Color"
+item_1/text = "Normal"
+item_2/text = "Roughness"
+item_3/text = "Emissive"
+item_4/text = "Occlusion"
+
+[node name="UseHands HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/UseHands HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Use Hands"
+vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/UseHands HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MorphTargets HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MorphTargets HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Morph Targets"
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/MorphTargets HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 4
+selected = 0
+popup/item_0/text = "None"
+popup/item_0/id = 0
+popup/item_1/text = "Basics"
+popup/item_1/id = 1
+popup/item_2/text = "Oculus Visemes"
+popup/item_2/id = 2
+popup/item_3/text = "ARKit"
+popup/item_3/id = 3
+
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_pressed"]
+[connection signal="value_changed" from="VBoxContainer/TextureSizeLimit HBoxContainer/HBoxContainer/HSlider" to="VBoxContainer/TextureSizeLimit HBoxContainer/HBoxContainer" method="_on_slider_changed"]
+[connection signal="text_changed" from="VBoxContainer/TextureSizeLimit HBoxContainer/HBoxContainer/LineEdit" to="VBoxContainer/TextureSizeLimit HBoxContainer/HBoxContainer" method="_on_number_changed"]
