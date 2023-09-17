@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/rpm-godot-sdk/runtime_loader.gd" id="1_u7joc"]
 [ext_resource type="Script" path="res://scripts/rotate.gd" id="2_xcd6u"]
-[ext_resource type="PackedScene" uid="uid://dlsbasjawp5v1" path="res://avatars/64bfcae90e72c63d7c398a43.tscn" id="3_jlxsw"]
+[ext_resource type="PackedScene" uid="uid://cidj3it6xf6de" path="res://avatars/64bfcae90e72c63d7c398a43.tscn" id="3_5a8jh"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_caopg"]
 
@@ -45,6 +45,6 @@ material = SubResource("StandardMaterial3D_nv10c")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1)
 script = ExtResource("2_xcd6u")
 
-[node name="64bfcae90e72c63d7c398a43" type="Node3D" parent="." instance=ExtResource("3_jlxsw")]
+[node name="64bfcae90e72c63d7c398a43" type="Node3D" parent="." instance=ExtResource("3_5a8jh")]
 
 [connection signal="pressed" from="Runtime/VBoxContainer/Button" to="Runtime" method="_on_pressed"]

@@ -35,26 +35,29 @@ func _request_completed(result, response_code, headers, body):
 		
 		if doc.append_from_buffer(body, "", state) == OK:
 			avatar = doc.generate_scene(state)
+			_save_to_scene(avatar)
+
 			var parent = get_tree().edited_scene_root
-			var scene = ResourceLoader.load( "res://avatars/" + guid + ".tscn") as PackedScene
+			var scene: PackedScene = ResourceLoader.load( "res://avatars/" + guid + ".tscn", "", ResourceLoader.CACHE_MODE_REUSE)
 			if scene:
+				scene.set_name.call_deferred("test")
 				var scene_instance = scene.instantiate()
+				
 				scene_instance.set_name(guid)
 				parent.add_child(scene_instance)
 				scene_instance.set_owner(parent)
-				
 			else:
 				push_error("Failed to load scene.")
-			
-			_save_to_scene(avatar)
-		
+
 			print("loaded")
 		else:
 			print("error")
 
 func _save_to_scene(avatar):
 	var packed_scene = PackedScene.new()
-	
+	packed_scene.resource_name = guid
+	avatar.name = guid
+
 	if packed_scene.pack(avatar) == OK:
 		if not DirAccess.dir_exists_absolute("res://avatars"):
 			DirAccess.make_dir_absolute("res://avatars")
