@@ -17,8 +17,6 @@ func _ready():
 	line_edit = $VBoxContainer/LineEdit
 	http_request = $HTTPRequest
 	http_request.connect("request_completed", _request_completed)
-	var scene = preload("res://addons/rpm-godot-sdk/walking.glb").instantiate()
-	anim_node = scene.get_node("AnimationPlayer").duplicate()
 	
 	"""Avatar Config"""
 	lod = $"VBoxContainer/LOD HBoxContainer/OptionButton"
@@ -45,7 +43,7 @@ func _request_completed(result, response_code, headers, body):
 		var state = GLTFState.new()
 		state.handle_binary_image = GLTFState.HANDLE_BINARY_EMBED_AS_UNCOMPRESSED
 		
-		if doc.append_from_buffer(body, "", state) == OK:
+		if doc.append_from_buffer(body, "", state, GLTFState.CONNECT_REFERENCE_COUNTED) == OK:
 			var avatar = doc.generate_scene(state)
 			_save_to_scene(avatar)
 
