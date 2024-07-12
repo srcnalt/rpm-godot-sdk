@@ -1,6 +1,6 @@
 @tool
 extends HBoxContainer
-class_name SliderWithField
+class_name NumericSlider
 
 var slider: HSlider
 var number: LineEdit
