@@ -12,6 +12,7 @@ var lod: OptionButton
 var pose: OptionButton
 var textureAtlas: OptionButton
 var textureSizeLimit: HSlider
+var texture_channels: ItemList
 
 func _ready():
 	line_edit = $VBoxContainer/LineEdit
@@ -23,6 +24,7 @@ func _ready():
 	pose = $"VBoxContainer/Pose HBoxContainer/OptionButton"
 	textureAtlas = $"VBoxContainer/TextureAtlas HBoxContainer/OptionButton"
 	textureSizeLimit = $"VBoxContainer/TextureSizeLimit HBoxContainer/HBoxContainer/HSlider"
+	texture_channels = $"VBoxContainer/TextureChannel HBoxContainer/ItemList"
 
 func _on_pressed():
 	if scene_instance != null:
@@ -87,6 +89,8 @@ func _build_parameters() -> String:
 	params += "lod=" + str(lod.selected) + "&"
 	params += "pose=" + poses[pose.selected] + "&"
 	params += "textureAtlas=" + textureAtlases[textureAtlas.selected] + "&"
-	params += "textureSizeLimit=" + str(textureSizeLimit.value)
+	params += "textureSizeLimit=" + str(textureSizeLimit.value) + "&"
+	params += "textureChannels=" + texture_channels.to_string()
+	
 	print(params)
 	return params

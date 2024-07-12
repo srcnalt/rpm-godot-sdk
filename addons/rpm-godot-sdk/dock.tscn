@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://4xm538djkeuw"]
+[gd_scene load_steps=5 format=3 uid="uid://4xm538djkeuw"]
 
 [ext_resource type="Script" path="res://addons/rpm-godot-sdk/avatar_loader.gd" id="1_yfrbv"]
 [ext_resource type="Texture2D" uid="uid://b6c2rt67nnfle" path="res://addons/rpm-godot-sdk/banner.png" id="2_nd2xs"]
-[ext_resource type="Script" path="res://scripts/number_slider.gd" id="3_idw2o"]
+[ext_resource type="Script" path="res://scripts/numeric_slider.gd" id="3_cvaun"]
+[ext_resource type="Script" path="res://scripts/multi_select.gd" id="4_htik3"]
 
 [node name="Dock" type="Control"]
 layout_mode = 3
@@ -120,7 +121,7 @@ vertical_alignment = 1
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TextureSizeLimit HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("3_idw2o")
+script = ExtResource("3_cvaun")
 
 [node name="HSlider" type="HSlider" parent="VBoxContainer/TextureSizeLimit HBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -137,6 +138,7 @@ virtual_keyboard_type = 2
 
 [node name="TextureChannel HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+script = ExtResource("4_htik3")
 
 [node name="Label" type="Label" parent="VBoxContainer/TextureChannel HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
@@ -199,3 +201,4 @@ popup/item_3/id = 3
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_pressed"]
 [connection signal="value_changed" from="VBoxContainer/TextureSizeLimit HBoxContainer/HBoxContainer/HSlider" to="VBoxContainer/TextureSizeLimit HBoxContainer/HBoxContainer" method="_on_slider_changed"]
 [connection signal="text_changed" from="VBoxContainer/TextureSizeLimit HBoxContainer/HBoxContainer/LineEdit" to="VBoxContainer/TextureSizeLimit HBoxContainer/HBoxContainer" method="_on_number_changed"]
+[connection signal="multi_selected" from="VBoxContainer/TextureChannel HBoxContainer/ItemList" to="VBoxContainer/TextureChannel HBoxContainer" method="_on_item_list_multi_selected"]
